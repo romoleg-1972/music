@@ -1,71 +1,549 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Над синей рекой — Олег</title>
-    <style>
-        /* Дизайн страницы: темный фон, текст по центру */
-        body {
-            background-color: #111827; /* Темно-синий/черный цвет */
-            color: #e5e7eb;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-        }
-        .player-card {
-            background-color: #1f2937;
-            padding: 40px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            text-align: center;
-            max-width: 400px;
-            width: 90%;
-        }
-        h1 {
-            color: #60a5fa; /* Голубой цвет, как река */
-            font-size: 28px;
-            margin-bottom: 5px;
-        }
-        h2 {
-            color: #9ca3af;
-            font-size: 18px;
-            font-weight: normal;
-            margin-top: 0;
-        }
-        /* Стилизация плеера */
-        audio {
-            width: 100%;
-            margin-top: 30px;
-            border-radius: 8px;
-        }
-        .footer {
-            margin-top: 30px;
-            font-size: 14px;
-            color: #4b5563;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Олег Родькин — Берега Оби</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --night: #0d1117;
+    --deep: #161b22;
+    --surface: #1c2333;
+    --border: #2d3748;
+    --ob: #4a9eff;
+    --ob-dim: #2a5a99;
+    --gold: #c8a84b;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --warm: #d4a96a;
+  }
+
+  body {
+    background: var(--night);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Звёздное небо */
+  .stars {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle var(--d) ease-in-out infinite alternate;
+  }
+  @keyframes twinkle {
+    from { opacity: 0.1; }
+    to { opacity: 0.8; }
+  }
+
+  /* Река внизу */
+  .river {
+    position: fixed;
+    bottom: 0; left: 0;
+    width: 100%; height: 120px;
+    background: linear-gradient(180deg, transparent 0%, rgba(74,158,255,0.06) 50%, rgba(74,158,255,0.12) 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .river::before {
+    content: '';
+    position: absolute;
+    top: 30px; left: -100%;
+    width: 300%; height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(74,158,255,0.3), rgba(74,158,255,0.5), rgba(74,158,255,0.3), transparent);
+    animation: flow 8s linear infinite;
+  }
+  .river::after {
+    content: '';
+    position: absolute;
+    top: 55px; left: -100%;
+    width: 300%; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(74,158,255,0.2), rgba(74,158,255,0.4), rgba(74,158,255,0.2), transparent);
+    animation: flow 12s linear infinite reverse;
+  }
+  @keyframes flow {
+    from { transform: translateX(0); }
+    to { transform: translateX(33.33%); }
+  }
+
+  .wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 60px 24px 140px;
+  }
+
+  /* Шапка */
+  header {
+    text-align: center;
+    margin-bottom: 64px;
+  }
+  .city-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--ob);
+    margin-bottom: 20px;
+    opacity: 0.8;
+  }
+  .album-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 8vw, 64px);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  .album-title span {
+    color: var(--ob);
+  }
+  .artist-name {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--warm);
+    margin-bottom: 24px;
+  }
+  .album-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  /* Разделитель */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 48px 0;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border));
+  }
+  .divider::after {
+    background: linear-gradient(90deg, var(--border), transparent);
+  }
+  .divider-icon {
+    color: var(--ob-dim);
+    font-size: 18px;
+  }
+
+  /* Плеер */
+  .player-card {
+    background: var(--deep);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 48px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(74,158,255,0.05);
+  }
+
+  .player-header {
+    background: linear-gradient(135deg, var(--surface) 0%, rgba(74,158,255,0.08) 100%);
+    padding: 28px 32px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .track-cover {
+    width: 72px;
+    height: 72px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--ob-dim), var(--night));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 16px rgba(74,158,255,0.2);
+  }
+
+  .track-info { flex: 1; min-width: 0; }
+  .track-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .track-meta {
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .track-meta span {
+    color: var(--ob);
+    margin-right: 8px;
+  }
+
+  .player-controls {
+    padding: 24px 32px;
+  }
+
+  audio {
+    width: 100%;
+    height: 40px;
+    outline: none;
+    border-radius: 8px;
+    margin-bottom: 0;
+  }
+
+  audio::-webkit-media-controls-panel {
+    background: var(--surface);
+    border-radius: 8px;
+  }
+
+  /* Кастомный прогресс под audio */
+  .audio-wrap {
+    background: var(--surface);
+    border-radius: 10px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .play-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--ob);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.15s, background 0.15s;
+    box-shadow: 0 4px 12px rgba(74,158,255,0.35);
+  }
+  .play-btn:hover { transform: scale(1.08); background: #5baeff; }
+  .play-btn svg { width: 18px; height: 18px; fill: white; }
+
+  .progress-area { flex: 1; }
+
+  .progress-bar {
+    width: 100%;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    cursor: pointer;
+    margin-bottom: 6px;
+    position: relative;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--ob), var(--gold));
+    border-radius: 2px;
+    width: 0%;
+    transition: width 0.1s linear;
+  }
+
+  .time-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Lyrics */
+  .lyrics-section {
+    margin-top: 0;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .lyrics-block {
+    background: var(--deep);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    border-left: 3px solid var(--ob-dim);
+  }
+
+  .lyric-part {
+    margin-bottom: 28px;
+  }
+  .lyric-part:last-child { margin-bottom: 0; }
+
+  .part-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--ob);
+    margin-bottom: 10px;
+    opacity: 0.7;
+  }
+
+  .lyric-lines {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--text);
+    font-style: italic;
+  }
+
+  .lyric-lines .chorus-line {
+    color: var(--warm);
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    margin-top: 64px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+  }
+  .footer-text {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .footer-text strong {
+    color: var(--warm);
+    font-weight: 500;
+  }
+  .ob-line {
+    color: var(--ob);
+    font-size: 18px;
+    margin-top: 12px;
+    opacity: 0.4;
+    letter-spacing: 8px;
+  }
+</style>
 </head>
 <body>
 
-    <div class="player-card">
-        <h1>Над синей рекой</h1>
-        <h2>Белые ночи</h2>
-        
-        <!-- Плеер берет файл из той же папки -->
-        <audio controls>
-            <source src="belye-noci-audio.mp3" type="audio/mpeg">
-            Ваш браузер не поддерживает аудио.
-        </audio>
+<!-- Звёзды -->
+<div class="stars" id="stars"></div>
+<div class="river"></div>
 
-        <div class="footer">
-            Самотлор · Нижневартовск
-        </div>
+<div class="wrap">
+
+  <header>
+    <div class="city-tag">Нижневартовск · Обь · 2026</div>
+    <h1 class="album-title">Берега <span>Оби</span></h1>
+    <div class="artist-name">Олег Родькин</div>
+    <p class="album-desc">Альбом о жизни, которую проживаешь — не придумываешь. О реке, которая всегда рядом.</p>
+  </header>
+
+  <div class="divider"><span class="divider-icon">〜</span></div>
+
+  <!-- Плеер -->
+  <div class="player-card">
+    <div class="player-header">
+      <div class="track-cover">🌊</div>
+      <div class="track-info">
+        <div class="track-title">Мой белый город над синей рекою</div>
+        <div class="track-meta"><span>01</span> Нижневартовск · 2026</div>
+      </div>
     </div>
+    <div class="player-controls">
+      <div class="audio-wrap">
+        <button class="play-btn" id="playBtn" onclick="togglePlay()">
+          <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <div class="progress-area">
+          <div class="progress-bar" id="progressBar" onclick="seek(event)">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <div class="time-row">
+            <span id="currentTime">0:00</span>
+            <span id="duration">—</span>
+          </div>
+        </div>
+      </div>
+      <!-- Скрытый audio элемент -->
+      <audio id="audioPlayer" preload="metadata"
+        src="https://raw.githubusercontent.com/romoleg-1972/music/main/belye-noci-audio.mp3">
+      </audio>
+    </div>
+  </div>
+
+  <!-- Текст песни -->
+  <div class="lyrics-section">
+    <div class="section-label">Текст песни</div>
+    <div class="lyrics-block">
+
+      <div class="lyric-part">
+        <div class="part-label">Куплет 1</div>
+        <div class="lyric-lines">
+          Там, где дороги сошлись на кургане,<br>
+          Где Самотлор зажигал свои вышки,<br>
+          Город рождался в суровом тумане,<br>
+          Парни на стройке, двухсотка и вспышка!<br>
+          Шло девятое СМУ сквозь глухую тайгу,<br>
+          Вбило первые сваи в седую марь…<br>
+          Этот край на холодном обском берегу<br>
+          Стал для тысяч людей как родной алтарь.
+        </div>
+      </div>
+
+      <div class="lyric-part">
+        <div class="part-label">Припев</div>
+        <div class="lyric-lines">
+          <span class="chorus-line">Мой белый город над синей рекою,</span><br>
+          <span class="chorus-line">Где белые ночи не знают покоя!</span><br>
+          Мы помним тех первых, что шли сквозь метели,<br>
+          Чтоб здесь, на болотах, дома зашумели.<br>
+          <span class="chorus-line">Нижневартовск — ты память, ты факел во мгле,</span><br>
+          <span class="chorus-line">Спасибо, «Алёша», поклоны земле.</span>
+        </div>
+      </div>
+
+      <div class="lyric-part">
+        <div class="part-label">Куплет 2</div>
+        <div class="lyric-lines">
+          Там, за домами — бескрайнее море,<br>
+          Дикое болото и кедров простор.<br>
+          Рассвет растворяет туман на озёрах,<br>
+          Вплетая свой голос в лесной разговор.<br>
+          А из рук великана на стыке дорог<br>
+          Вечный огонь согревает рассвет.<br>
+          Каждый, кто вырос здесь, точно бы смог<br>
+          В сердце оставить свой искренний след.
+        </div>
+      </div>
+
+      <div class="lyric-part">
+        <div class="part-label">Бридж</div>
+        <div class="lyric-lines">
+          Уходили года, открывались капсулы времени,<br>
+          Но остался тот дух, что вовек не согнуть.<br>
+          Вартовчане одной нерушимой семьёй<br>
+          Продолжают свой светлый и правильный путь!
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-text">
+      <strong>Олег Родькин</strong> · Нижневартовск<br>
+      34 года в нефтянке · Слесарь КИПиА VI разряда
+    </div>
+    <div class="ob-line">〜 〜 〜</div>
+  </footer>
+
+</div>
+
+<script>
+  // Звёзды
+  const starsEl = document.getElementById('stars');
+  for (let i = 0; i < 120; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random() * 2 + 0.5;
+    s.style.cssText = `
+      width:${size}px; height:${size}px;
+      left:${Math.random()*100}%;
+      top:${Math.random()*70}%;
+      --d:${2+Math.random()*4}s;
+      animation-delay:${Math.random()*4}s;
+    `;
+    starsEl.appendChild(s);
+  }
+
+  // Плеер
+  const audio = document.getElementById('audioPlayer');
+  const playBtn = document.getElementById('playBtn');
+  const playIcon = document.getElementById('playIcon');
+  const progressFill = document.getElementById('progressFill');
+  const currentTimeEl = document.getElementById('currentTime');
+  const durationEl = document.getElementById('duration');
+
+  const pauseSVG = `<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>`;
+  const playSVG = `<path d="M8 5v14l11-7z"/>`;
+
+  function togglePlay() {
+    if (audio.paused) {
+      audio.play();
+      playIcon.innerHTML = pauseSVG;
+    } else {
+      audio.pause();
+      playIcon.innerHTML = playSVG;
+    }
+  }
+
+  function fmt(s) {
+    const m = Math.floor(s/60);
+    const sec = Math.floor(s%60);
+    return `${m}:${sec<10?'0':''}${sec}`;
+  }
+
+  audio.addEventListener('loadedmetadata', () => {
+    durationEl.textContent = fmt(audio.duration);
+  });
+
+  audio.addEventListener('timeupdate', () => {
+    if (audio.duration) {
+      const pct = (audio.currentTime / audio.duration) * 100;
+      progressFill.style.width = pct + '%';
+      currentTimeEl.textContent = fmt(audio.currentTime);
+    }
+  });
+
+  audio.addEventListener('ended', () => {
+    playIcon.innerHTML = playSVG;
+    progressFill.style.width = '0%';
+    currentTimeEl.textContent = '0:00';
+  });
+
+  function seek(e) {
+    const bar = document.getElementById('progressBar');
+    const rect = bar.getBoundingClientRect();
+    const pct = (e.clientX - rect.left) / rect.width;
+    audio.currentTime = pct * audio.duration;
+  }
+</script>
 
 </body>
 </html>
