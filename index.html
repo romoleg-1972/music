@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -31,13 +30,10 @@
     overflow-x: hidden;
   }
 
-  /* Звёздное небо */
   .stars {
-    position: fixed;
-    top: 0; left: 0;
+    position: fixed; top: 0; left: 0;
     width: 100%; height: 100%;
-    pointer-events: none;
-    z-index: 0;
+    pointer-events: none; z-index: 0;
   }
   .star {
     position: absolute;
@@ -45,323 +41,200 @@
     border-radius: 50%;
     animation: twinkle var(--d) ease-in-out infinite alternate;
   }
-  @keyframes twinkle {
-    from { opacity: 0.1; }
-    to { opacity: 0.8; }
-  }
+  @keyframes twinkle { from { opacity: 0.1; } to { opacity: 0.8; } }
 
-  /* Река внизу */
   .river {
-    position: fixed;
-    bottom: 0; left: 0;
+    position: fixed; bottom: 0; left: 0;
     width: 100%; height: 120px;
     background: linear-gradient(180deg, transparent 0%, rgba(74,158,255,0.06) 50%, rgba(74,158,255,0.12) 100%);
-    pointer-events: none;
-    z-index: 0;
+    pointer-events: none; z-index: 0;
   }
   .river::before {
-    content: '';
-    position: absolute;
-    top: 30px; left: -100%;
+    content: ''; position: absolute; top: 30px; left: -100%;
     width: 300%; height: 2px;
     background: linear-gradient(90deg, transparent, rgba(74,158,255,0.3), rgba(74,158,255,0.5), rgba(74,158,255,0.3), transparent);
     animation: flow 8s linear infinite;
   }
   .river::after {
-    content: '';
-    position: absolute;
-    top: 55px; left: -100%;
+    content: ''; position: absolute; top: 55px; left: -100%;
     width: 300%; height: 1px;
     background: linear-gradient(90deg, transparent, rgba(74,158,255,0.2), rgba(74,158,255,0.4), rgba(74,158,255,0.2), transparent);
     animation: flow 12s linear infinite reverse;
   }
-  @keyframes flow {
-    from { transform: translateX(0); }
-    to { transform: translateX(33.33%); }
-  }
+  @keyframes flow { from { transform: translateX(0); } to { transform: translateX(33.33%); } }
 
   .wrap {
-    position: relative;
-    z-index: 1;
-    max-width: 720px;
-    margin: 0 auto;
+    position: relative; z-index: 1;
+    max-width: 720px; margin: 0 auto;
     padding: 60px 24px 140px;
   }
 
-  /* Шапка */
-  header {
-    text-align: center;
-    margin-bottom: 64px;
-  }
+  header { text-align: center; margin-bottom: 56px; }
   .city-tag {
-    display: inline-block;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--ob);
-    margin-bottom: 20px;
-    opacity: 0.8;
+    display: inline-block; font-size: 11px; font-weight: 500;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: var(--ob); margin-bottom: 20px; opacity: 0.8;
   }
   .album-title {
     font-family: 'Playfair Display', serif;
     font-size: clamp(36px, 8vw, 64px);
-    font-weight: 700;
-    line-height: 1.1;
-    color: var(--text);
-    margin-bottom: 8px;
+    font-weight: 700; line-height: 1.1;
+    color: var(--text); margin-bottom: 8px;
   }
-  .album-title span {
-    color: var(--ob);
-  }
+  .album-title span { color: var(--ob); }
   .artist-name {
     font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: 18px;
-    color: var(--warm);
-    margin-bottom: 24px;
+    font-style: italic; font-size: 18px;
+    color: var(--warm); margin-bottom: 24px;
   }
   .album-desc {
-    font-size: 14px;
-    color: var(--muted);
-    line-height: 1.7;
-    max-width: 420px;
-    margin: 0 auto;
+    font-size: 14px; color: var(--muted); line-height: 1.7;
+    max-width: 420px; margin: 0 auto;
   }
 
-  /* Разделитель */
-  .divider {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin: 48px 0;
-  }
+  .divider { display: flex; align-items: center; gap: 16px; margin: 40px 0; }
   .divider::before, .divider::after {
-    content: '';
-    flex: 1;
-    height: 1px;
+    content: ''; flex: 1; height: 1px;
     background: linear-gradient(90deg, transparent, var(--border));
   }
-  .divider::after {
-    background: linear-gradient(90deg, var(--border), transparent);
-  }
-  .divider-icon {
-    color: var(--ob-dim);
-    font-size: 18px;
-  }
+  .divider::after { background: linear-gradient(90deg, var(--border), transparent); }
+  .divider-icon { color: var(--ob-dim); font-size: 18px; }
 
-  /* Плеер */
-  .player-card {
+  .playlist { display: flex; flex-direction: column; gap: 12px; margin-bottom: 56px; }
+
+  .track-card {
     background: var(--deep);
     border: 1px solid var(--border);
-    border-radius: 16px;
+    border-radius: 14px;
     overflow: hidden;
-    margin-bottom: 48px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(74,158,255,0.05);
+    transition: border-color 0.2s;
+  }
+  .track-card.active {
+    border-color: var(--ob-dim);
+    box-shadow: 0 0 0 1px rgba(74,158,255,0.15), 0 8px 24px rgba(0,0,0,0.35);
   }
 
-  .player-header {
-    background: linear-gradient(135deg, var(--surface) 0%, rgba(74,158,255,0.08) 100%);
-    padding: 28px 32px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 20px;
+  .track-row {
+    display: flex; align-items: center; gap: 16px;
+    padding: 16px 20px;
+    cursor: pointer;
   }
 
-  .track-cover {
-    width: 72px;
-    height: 72px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, var(--ob-dim), var(--night));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 28px;
-    flex-shrink: 0;
-    box-shadow: 0 4px 16px rgba(74,158,255,0.2);
-  }
-
-  .track-info { flex: 1; min-width: 0; }
-  .track-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 4px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .track-meta {
-    font-size: 13px;
-    color: var(--muted);
-  }
-  .track-meta span {
-    color: var(--ob);
-    margin-right: 8px;
-  }
-
-  .player-controls {
-    padding: 24px 32px;
-  }
-
-  audio {
-    width: 100%;
-    height: 40px;
-    outline: none;
+  .track-num {
+    width: 32px; height: 32px;
     border-radius: 8px;
-    margin-bottom: 0;
-  }
-
-  audio::-webkit-media-controls-panel {
     background: var(--surface);
-    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; color: var(--muted);
+    flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
   }
+  .track-card.active .track-num { background: var(--ob); color: white; }
 
-  /* Кастомный прогресс под audio */
+  .track-row-info { flex: 1; min-width: 0; }
+  .track-row-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; font-weight: 700;
+    color: var(--text);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .track-row-meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  .track-mini-play {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
+  .track-card.active .track-mini-play { background: var(--ob); border-color: var(--ob); }
+  .track-mini-play svg { width: 14px; height: 14px; fill: var(--muted); }
+  .track-card.active .track-mini-play svg { fill: white; }
+
+  .lyrics-toggle {
+    width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; cursor: pointer;
+    color: var(--muted);
+    transition: transform 0.25s, color 0.2s;
+  }
+  .lyrics-toggle.open { transform: rotate(180deg); color: var(--ob); }
+  .lyrics-toggle svg { width: 16px; height: 16px; }
+
+  .track-expand { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+  .track-expand.open { max-height: 2000px; transition: max-height 0.6s ease; }
+
+  .expand-inner { padding: 0 20px 24px; border-top: 1px solid var(--border); }
+
   .audio-wrap {
     background: var(--surface);
     border-radius: 10px;
     padding: 14px 18px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
+    display: flex; align-items: center; gap: 14px;
+    margin-top: 20px;
   }
 
   .play-btn {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: var(--ob);
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--ob); border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
     transition: transform 0.15s, background 0.15s;
     box-shadow: 0 4px 12px rgba(74,158,255,0.35);
   }
   .play-btn:hover { transform: scale(1.08); background: #5baeff; }
-  .play-btn svg { width: 18px; height: 18px; fill: white; }
+  .play-btn svg { width: 16px; height: 16px; fill: white; }
 
   .progress-area { flex: 1; }
-
   .progress-bar {
-    width: 100%;
-    height: 4px;
-    background: var(--border);
-    border-radius: 2px;
-    cursor: pointer;
-    margin-bottom: 6px;
-    position: relative;
-    overflow: hidden;
+    width: 100%; height: 4px;
+    background: var(--border); border-radius: 2px;
+    cursor: pointer; margin-bottom: 6px;
+    position: relative; overflow: hidden;
   }
   .progress-fill {
     height: 100%;
     background: linear-gradient(90deg, var(--ob), var(--gold));
-    border-radius: 2px;
-    width: 0%;
+    border-radius: 2px; width: 0%;
     transition: width 0.1s linear;
   }
-
   .time-row {
-    display: flex;
-    justify-content: space-between;
-    font-size: 11px;
-    color: var(--muted);
+    display: flex; justify-content: space-between;
+    font-size: 11px; color: var(--muted);
     font-variant-numeric: tabular-nums;
   }
 
-  /* Lyrics */
-  .lyrics-section {
-    margin-top: 0;
+  .lyrics-block { margin-top: 20px; padding-top: 20px; border-top: 1px dashed var(--border); }
+  .section-label-mini {
+    font-size: 10px; font-weight: 500; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 16px;
   }
-
-  .section-label {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 24px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .section-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-
-  .lyrics-block {
-    background: var(--deep);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 32px;
-    border-left: 3px solid var(--ob-dim);
-  }
-
-  .lyric-part {
-    margin-bottom: 28px;
-  }
+  .lyric-part { margin-bottom: 22px; }
   .lyric-part:last-child { margin-bottom: 0; }
-
   .part-label {
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--ob);
-    margin-bottom: 10px;
-    opacity: 0.7;
+    font-size: 10px; font-weight: 500; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--ob);
+    margin-bottom: 8px; opacity: 0.7;
   }
-
   .lyric-lines {
     font-family: 'Playfair Display', serif;
-    font-size: 16px;
-    line-height: 1.85;
-    color: var(--text);
-    font-style: italic;
+    font-size: 15px; line-height: 1.8;
+    color: var(--text); font-style: italic;
   }
+  .lyric-lines .chorus-line { color: var(--warm); font-weight: 700; font-style: normal; }
 
-  .lyric-lines .chorus-line {
-    color: var(--warm);
-    font-weight: 700;
-    font-style: normal;
-  }
+  .no-lyrics { font-size: 13px; color: var(--muted); font-style: italic; padding: 8px 0; }
 
-  /* Footer */
-  footer {
-    text-align: center;
-    margin-top: 64px;
-    padding-top: 32px;
-    border-top: 1px solid var(--border);
-  }
-  .footer-text {
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.6;
-  }
-  .footer-text strong {
-    color: var(--warm);
-    font-weight: 500;
-  }
-  .ob-line {
-    color: var(--ob);
-    font-size: 18px;
-    margin-top: 12px;
-    opacity: 0.4;
-    letter-spacing: 8px;
-  }
+  footer { text-align: center; margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--border); }
+  .footer-text { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .footer-text strong { color: var(--warm); font-weight: 500; }
+  .ob-line { color: var(--ob); font-size: 18px; margin-top: 12px; opacity: 0.4; letter-spacing: 8px; }
 </style>
 </head>
 <body>
 
-<!-- Звёзды -->
 <div class="stars" id="stars"></div>
 <div class="river"></div>
 
@@ -371,104 +244,17 @@
     <div class="city-tag">Нижневартовск · Обь · 2026</div>
     <h1 class="album-title">На Берегах <span>Оби</span></h1>
     <div class="artist-name">Олег Родькин</div>
-    <p class="album-desc">Альбом о жизни, которую проживаешь — не придумываешь. О реке, которая всегда рядом.</p>
+    <p class="album-desc">Альбом о жизни, которую проживаешь — не придумываешь. Нижневартовск, Самотлор, близкие люди — то, что всегда рядом.</p>
   </header>
 
   <div class="divider"><span class="divider-icon">〜</span></div>
 
-  <!-- Плеер -->
-  <div class="player-card">
-    <div class="player-header">
-      <div class="track-cover">🌊</div>
-      <div class="track-info">
-        <div class="track-title">Мой белый город над синей рекою</div>
-        <div class="track-meta"><span>01</span> Нижневартовск · 2026</div>
-      </div>
-    </div>
-    <div class="player-controls">
-      <div class="audio-wrap">
-        <button class="play-btn" id="playBtn" onclick="togglePlay()">
-          <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-        </button>
-        <div class="progress-area">
-          <div class="progress-bar" id="progressBar" onclick="seek(event)">
-            <div class="progress-fill" id="progressFill"></div>
-          </div>
-          <div class="time-row">
-            <span id="currentTime">0:00</span>
-            <span id="duration">—</span>
-          </div>
-        </div>
-      </div>
-      <!-- Скрытый audio элемент -->
-      <audio id="audioPlayer" preload="metadata"
-        src="https://raw.githubusercontent.com/romoleg-1972/music/main/belye-noci-audio.mp3">
-      </audio>
-    </div>
-  </div>
-
-  <!-- Текст песни -->
-  <div class="lyrics-section">
-    <div class="section-label">Текст песни</div>
-    <div class="lyrics-block">
-
-      <div class="lyric-part">
-        <div class="part-label">Куплет 1</div>
-        <div class="lyric-lines">
-          Там, где дороги сошлись на кургане,<br>
-          Где Самотлор зажигал свои вышки,<br>
-          Город рождался в суровом тумане,<br>
-          Парни на стройке, двухсотка и вспышка!<br>
-          Шло девятое СМУ сквозь глухую тайгу,<br>
-          Вбило первые сваи в седую марь…<br>
-          Этот край на холодном обском берегу<br>
-          Стал для тысяч людей как родной алтарь.
-        </div>
-      </div>
-
-      <div class="lyric-part">
-        <div class="part-label">Припев</div>
-        <div class="lyric-lines">
-          <span class="chorus-line">Мой белый город над синей рекою,</span><br>
-          <span class="chorus-line">Где белые ночи не знают покоя!</span><br>
-          Мы помним тех первых, что шли сквозь метели,<br>
-          Чтоб здесь, на болотах, дома зашумели.<br>
-          <span class="chorus-line">Нижневартовск — ты память, ты факел во мгле,</span><br>
-          <span class="chorus-line">Спасибо, «Алёша», поклоны земле.</span>
-        </div>
-      </div>
-
-      <div class="lyric-part">
-        <div class="part-label">Куплет 2</div>
-        <div class="lyric-lines">
-          Там, за домами — бескрайнее море,<br>
-          Дикое болото и кедров простор.<br>
-          Рассвет растворяет туман на озёрах,<br>
-          Вплетая свой голос в лесной разговор.<br>
-          А из рук великана на стыке дорог<br>
-          Вечный огонь согревает рассвет.<br>
-          Каждый, кто вырос здесь, точно бы смог<br>
-          В сердце оставить свой искренний след.
-        </div>
-      </div>
-
-      <div class="lyric-part">
-        <div class="part-label">Бридж</div>
-        <div class="lyric-lines">
-          Уходили года, открывались капсулы времени,<br>
-          Но остался тот дух, что вовек не согнуть.<br>
-          Вартовчане одной нерушимой семьёй<br>
-          Продолжают свой светлый и правильный путь!
-        </div>
-      </div>
-
-    </div>
-  </div>
+  <div class="playlist" id="playlist"></div>
 
   <footer>
     <div class="footer-text">
       <strong>Олег Родькин</strong> · Нижневартовск<br>
-      Самотлор · Слесарь КИПиА 
+      Самотлор · Слесарь КИПиА
     </div>
     <div class="ob-line">〜 〜 〜</div>
   </footer>
@@ -476,73 +262,334 @@
 </div>
 
 <script>
-  // Звёзды
+  const tracks = [
+    {
+      title: "Над синей рекою",
+      meta: "Нижневартовск · 2026",
+      src: "https://raw.githubusercontent.com/romoleg-1972/music/main/belye-noci-audio.mp3",
+      lyrics: [
+        { label: "Куплет 1", lines: `Там, где дороги сошлись на кургане,<br>Где Самотлор зажигал свои вышки,<br>Город рождался в суровом тумане,<br>Парни на стройке, двухсотка и вспышка!<br>Шло девятое СМУ сквозь глухую тайгу,<br>Вбило первые сваи в седую марь…<br>Этот край на холодном обском берегу<br>Стал для тысяч людей как родной алтарь.` },
+        { label: "Припев", lines: `<span class="chorus-line">Мой белый город над синей рекою,</span><br><span class="chorus-line">Где белые ночи не знают покоя!</span><br>Мы помним тех первых, что шли сквозь метели,<br>Чтоб здесь, на болотах, дома зашумели.<br><span class="chorus-line">Нижневартовск — ты память, ты факел во мгле,</span><br><span class="chorus-line">Спасибо, «Алёша», поклоны земле.</span>` },
+        { label: "Куплет 2", lines: `Там, за домами — бескрайнее море,<br>Дикое болото и кедров простор.<br>Рассвет растворяет туман на озёрах,<br>Вплетая свой голос в лесной разговор.<br>А из рук великана на стыке дорог<br>Вечный огонь согревает рассвет.<br>Каждый, кто вырос здесь, точно бы смог<br>В сердце оставить свой искренний след.` },
+        { label: "Бридж", lines: `Уходили года, открывались капсулы времени,<br>Но остался тот дух, что вовек не согнуть.<br>Вартовчане одной нерушимой семьёй<br>Продолжают свой светлый и правильный путь!` }
+      ]
+    },
+	
+    { title: "Лента времени",
+      meta: "Нижневартовск · 2026",
+      src: "https://raw.githubusercontent.com/romoleg-1972/music/main/02-lenta-vremeni-audio.mp3",
+      lyrics: [
+		{ label: "Вступление", lines: `Эти двадцать минут с хвостиком — всегда самые тягучие...<br>Ты уже мысленно одной ногой в домашних тапках,<br>а стрелка часов будто назло замедляется.<br>Самое время навести финальный порядок,<br>закрыть все вкладки...<br>и просто спокойно посидеть на дорожку.` },
+		{ label: "Куплет 1", lines: `Крутится лента, стирая прошедшие дни,<br>В студии душной у парка зажглись огни.<br>Жизнь предлагала развилку и два пути,<br>Сердце металось — по какой дороге идти?<br><br>Но рок или случай черту провели впотьмах,<br>Судьба расставила точки в моих узлах.<br>Сквозь боль утраты, сквозь оборванный тонкий след,<br>Век девяносто седьмой мне принёс ответ.` },
+		{ label: "Куплет 2 — Встреча", lines: `Постовая будка, друг на ночном посту,<br>Я на «Москвиче» разрезаю темноту.<br>Мимо витрин, сквозь город и пустоту,<br>В огнях ночных мелькнули силуэты.<br>Случайная встреча нарушила запреты,<br>Первая ночь — скромно, в разных углах,<br>А стрелки застыли на часах.` },
+		{ label: "Куплет 3 — Семья", lines: `Девочка с Урала в Сибирском краю,<br>Связала навечно дорогу свою.<br>Свадьбу сыграли в кругу родни,<br>В родительских стенах пошли дни.<br>Планы строили в вихре перемен,<br>Шагнули за рамки этих стен.<br>Своя однушка, ключи на столе...<br>Так заземлились на этой земле.` },
+		{ label: "Финал", lines: `Крутится лента...<br>Студия у парка...<br>Сквозь тонкий след...<br>Застывшие стрелки часов...<br>Наша однушка.<br><br>Да...<br>Время летит, лента крутится.<br>Но иногда нужно просто застыть.<br>Снять все эти роли, закрыть вкладки...<br>И просто побыть собой.<br><br>Ну что...<br>Посидим на дорожку?<br>И домой.<br>В тишину.` }
+			]
+	},
+	
+	{ title: "Железные сердца",
+      meta: "Нижневартовск · 2026",
+      src: "https://raw.githubusercontent.com/romoleg-1972/music/main/07-zeleznye-serdca-audio.mp3",
+      lyrics: [
+		{ label: "Вступление", lines: `Мужчины очень редко плачут.<br>Но когда они плачут — это очень страшные слёзы.<br>Или их сердца растаяли... железные сердца...<br>Или же они сгорели.<br>Одна душа. Два исхода...` },
+		{ label: "Куплет 1", lines: `Он не гнулся под ветром, когда хоронил отца,<br>Он держал под прицелом удары чужого свинца.<br>Но броня расплавилась, перестав быть бронёй,<br>Когда дочка шепнула простые слова: «Папа».<br>Папа.<br>Это не было слабостью, крахом, бедой —<br>Просто сталь уступила, став просто тёплой водой.<br>Предел прочности сбит не обломками чьих-то обид,<br>А теплом, от которого не нужно больше быть сталью.<br>Сталью.` },
+		{ label: "Бридж", lines: `А всё остальное... мужчины обычно молчат.` },
+		{ label: "Куплет 2", lines: `Говорят, это статус и опора, характер и сталь.<br>Говорят, что железо не знает, что значит печаль.<br>Но когда на исходе догорел твой ресурс вконец,<br>И трещит та броня, под которой горел рубец —<br>Включается прочность уставших, но выживших наших сердец.<br>Годами этот аврал, и эта вечная в жилах страда,<br>На этих широких плечах замерзают чужие года.<br>Где столько рубцов под осевшей золой, где сгорает броня дотла,<br>На этом железе живого места уже не дано...<br>Живая вода испарилась.<br>Остался только пепел.` },
+		{ label: "Финал", lines: `Клейма ставить уже некуда...` }
+			]
+	},
+	
+	
+	{ title: "Теплый ветер дворов",
+      meta: "Нижневартовск · 2026",
+      src: "https://raw.githubusercontent.com/romoleg-1972/music/main/teplyi-veter-dvorov-audio.mp3",
+      lyrics: [
+		{ label: "Куплет 1", lines: `Время стирает краску на старых стенах,<br>Год пролетает за годом, меняя лица.<br>Память пульсирует где-то в остывших венах,<br>И этот город мне снова и снова снится.<br><br>Квадратный двор, где асфальт от дождей темнеет,<br>И силуэты окон в вечернем свете…<br>Там мы взрослели, ловя старых улиц эхо,<br>Пока шумел во дворе этот тёплый ветер.` },
+		{ label: "Куплет 2", lines: `А город ширился, звал за собой огнями,<br>Новые лица, работа, огни, причалы.<br>Мы мерили мили уже не шагами — часами,<br>И вечно казалось, что времени этого мало.<br><br>Но в шуме проспектов, на стыке шальных перекрёстков,<br>Случайный твой взгляд — и суетный бег прекратился.<br>Семья, новый дом... Понимаешь теперь, как всё просто:<br>Ты так торопился, но именно здесь — очутился.` },
+		{ label: "Куплет 3", lines: `И вот уже новые ножки по лужам топочут,<br>Маленькие ладошки доверчиво греют мне руку.<br>Сменяются годы, и дни улетают в рассветы и ночи,<br>Но в этом кружении нет места тоске или испугу.<br><br>Ведь каждый этап — как один золотой поворот,<br>Он неповторим, и не нужно листать календарь...<br>Музыка тихим дождём продолжает капать,<br>Время, пожалуйста, тише… Его не торопите.` }
+			]
+	},
+	{ title: "Здравствуй мама , здравствуй папа...",
+      meta: "Нижневартовск · 2026",
+      src: "https://raw.githubusercontent.com/romoleg-1972/music/main/_zdravstvui-mama-zdravstvui-papa-audio.mp3",
+      lyrics: [
+		{ label: "Вступление", lines: `Здравствуй, мама. Здравствуй, папа. Я пришёл.` },
+		{ label: "Куплет 1", lines: `Я иду по нагретой земле,<br>В кулаке — две гвоздики и хлеб.<br>Тишина замерла у креста,<br>И сбивает привычный шаг.<br>Ваши имена на граните,<br>Как будто вы просто спите.<br>Я так долго учился жить,<br>А пришёл — и опять молчу.` },
+		{ label: "Перед припевом", lines: `Но я знаю — вы слышите меня,<br>Сквозь года и земной покой.<br>Я принёс вам свой тёплый день,<br>И всё то, что берёг душой.` },
+		{ label: "Припев", lines: `<span class="chorus-line">Здравствуй, мама... Здравствуй, папа...</span><br><span class="chorus-line">Я пришёл к вам опять,</span><br><span class="chorus-line">Не один, а с тоской.</span><br><span class="chorus-line">Здравствуй, мама... Здравствуй, папа...</span><br><span class="chorus-line">Мне так важно сказать:</span><br><span class="chorus-line">Я скучаю... Живой.</span>` },
+		{ label: "Куплет 2", lines: `Я кладу цветы у ограды,<br>Поправляю сухую траву.<br>И в кармане звенит ключами<br>Всё, чем в суетном мире живу.<br>Мама, помню твой добрый взгляд,<br>Что берёг от любых ветров.<br>Папа, стал на тебя похож,<br>Когда мне не хватает слов.` },
+		{ label: "Бридж", lines: `Если можно, приснитесь мне,<br>Хоть на миг, хоть на краткий час.<br>Чтобы я не носил в себе<br>Всё, что выросло между нас.<br>Я бы сел между вами опять,<br>Как бывало у нас в тишине.<br>И сказал бы всё, что держал<br>В этой взрослой своей войне.` },
+		{ label: "Финальный припев", lines: `<span class="chorus-line">Здравствуй, мама... Здравствуй, папа...</span><br><span class="chorus-line">Я пришёл к вам опять,</span><br><span class="chorus-line">Не один, а с тоской.</span><br><span class="chorus-line">Здравствуй, мама... Здравствуй, папа...</span><br><span class="chorus-line">Пусть мой голос дойдёт...</span><br>Я люблю вас... живой.` },
+		{ label: "Финал", lines: `Я приду ещё...<br>Я приду.` }
+			]
+	},
+	
+	{ title: "Дом там, где...",
+      meta: "Нижневартовск · 2026",
+      src: "https://raw.githubusercontent.com/romoleg-1972/music/main/dom-tam-gde-audio.mp3",
+      lyrics: [
+		{ label: "Вступление — диалог", lines: `— Привет...<br>— Не спишь?<br>— Нет... Я сегодня весь вечер думал...<br>— О чём?<br>— О том... как странно приходит любовь...` },
+		{ label: "Куплет 1", lines: `Она не приходит по нашему зову,<br>Она появляется тихо, без слов...<br>Устав от чужих и ненужных речей,<br>Среди бесконечной мирской суеты.<br><br>Вдруг время само забывает свой счёт,<br>Стираются шумы чужих городов...<br>Ты понимаешь: дороже всего —<br>Глаза, что однажды сказали без слов.` },
+		{ label: "Припев", lines: `<span class="chorus-line">Моментов в жизни было много,</span><br><span class="chorus-line">Но самый главный — встреча та.</span><br><span class="chorus-line">Когда однажды волей Бога</span><br><span class="chorus-line">Вошла в мой мир твоя душа.</span><br><br>И снова тянется рука...<br>— Привет... Как ты там? Скучал?<br>И есть всегда сказать кому:<br>— Я так скучаю... И люблю.` },
+		{ label: "Куплет 2", lines: `Уже не считаешь счастливые дни,<br>Не ищешь ответы среди новостей.<br>Всё то, что казалось когда-то большим,<br>Вдруг стало намного проще теперь.<br><br>И дом — это больше не стены вокруг,<br>Не адрес на карте, не номер дверей...<br>Дом там, где тебя понимают без слов,<br>Где можно молчать — и быть понятым вновь.` },
+		{ label: "Припев", lines: `<span class="chorus-line">Моментов в жизни было много,</span><br><span class="chorus-line">И за каждый я судьбу благодарю.</span><br><span class="chorus-line">За тишину у нашего порога,</span><br><span class="chorus-line">За то, что дома ждут меня...</span><br><br>И снова в трубке тихое:<br>— Ты скоро?..<br>— Уже рядом... Я так скучаю... И люблю.` },
+		{ label: "Финал", lines: `Дом там, где тебя понимают без слов...<br>— И ждут...` }
+			]
+	},
+	
+	{ title: "С днем торговли",
+      meta: "Нижневартовск · 2026",
+      src: "https://raw.githubusercontent.com/romoleg-1972/music/main/16-s-dnem-torgovli-audio.mp3",
+      lyrics: [
+		{ label: "Вступление — голос системы", lines: `Инициализация...<br>Режим праздника — активирован.<br>Анализ профессии...<br>Торговля...<br>Ошибка.<br>Торговля — это доверие между людьми.<br>Запуск музыкального кода.` },
+		{ label: "Куплет 1", lines: `От коробейников с купцами<br>И до маркетплейсов в Сети —<br>Всю жизнь бок о бок с продавцами,<br>Нам с продавцами по пути…<br>Есть спрос? Так нате предложенье —<br>Взаимовыгодный обмен…<br>Наличности вам умноженья<br>И к лучшей жизни перемен…` },
+		{ label: "Перед припевом", lines: `Оплата принята.<br>Хорошее настроение зачислено.` },
+		{ label: "Припев", lines: `<span class="chorus-line">Эй, гуляй, июль! Касса, на репит!</span><br><span class="chorus-line">Пусть от прибыли вся жизнь вовсю кипит!</span><br><span class="chorus-line">Полных касс, улыбок, радости вагон —</span><br><span class="chorus-line">С Днём торговли — этот летний разгон!</span><br>(Давай! Давай!)` },
+		{ label: "Куплет 2", lines: `В языке есть слово «выручка» — знают все вокруг:<br>Это деньги в кассе… И плечо, когда поможет друг.<br>Так пусть в жизни будет выручка — двойной такой баланс:<br>И в купюрах, и в людях, чтоб горел азарт в глазах…<br>Маржа, доходы, барыши, приумноженье, куш…<br>Встречай, Златоуст! Сегодня жаркий драйв…` },
+		{ label: "Перед припевом", lines: `Доступ открыт.<br>Лето — на повтор.` },
+		{ label: "Припев", lines: `<span class="chorus-line">Эй, гуляй, июль! Касса, на репит!</span><br><span class="chorus-line">Пусть от прибыли вся жизнь вовсю кипит!</span><br><span class="chorus-line">Полных касс, улыбок, радости вагон —</span><br><span class="chorus-line">С Днём торговли — этот летний разгон!</span>` },
+		{ label: "Финал — голос системы", lines: `Проверка завершена.<br>Доверие найдено.<br>Система работает нормально.<br>Потому что рядом — хорошие люди.<br>С праздником!` }
+			]
+	},
+	
+	{ title: "Тылсымлы төн",
+      meta: "Нижневартовск · 2026",
+      src: "https://raw.githubusercontent.com/romoleg-1972/music/main/_tylsymly-ton-audio.mp3",
+      lyrics: [
+		{ label: "Вступление", lines: `Тише... В доме уже гаснет свет...` },
+		{ label: "Куплет 1", lines: `Угольки догорают, туман над водой,<br>Старый башкирский пруд замер в ночи.<br>Здесь когда-то искали песок золотой,<br>А я медленно в тёмную гладь захожу.<br>Плыву тихо, едва скользя, не режу тишь,<br>В небе чистые звёзды, шепчет камыш,<br>И от костра лёгкий дым вверх летит,<br>Даже ветер боится нарушить покой.` },
+		{ label: "Припев (башкирский)", lines: `<span class="chorus-line">Тылсымлы төн, тынычлыҡ...</span><br><span class="chorus-line">Ай нуры тулҡында уйнай.</span><br><span class="chorus-line">Йөрәк йылыһы, алтын һүҙ —</span><br><span class="chorus-line">Пока живёт тепло — мы рядом.</span>` },
+		{ label: "Куплет 2", lines: `И где-то вдали проскользнул состав сквозь ночь,<br>Разрезал гулом тишину и растаял за рекой...<br>И в памяти всплыл тот вечер у огня<br>И тихое: «Спасибо вам...», что всё ещё звучит во мне.<br>В доме гаснут огни, накрывает покой,<br>Костёр почти погас, но тепло бережёт...<br>И понял: главное богатство этих берегов —<br>Не то, что в земле, а то, что в сердце живёт.` },
+		{ label: "Припев (башкирский)", lines: `<span class="chorus-line">Тылсымлы төн, тынычлыҡ...</span><br><span class="chorus-line">Ай нуры тулҡында уйнай.</span><br><span class="chorus-line">Йөрәк йылыһы, алтын һүҙ —</span><br><span class="chorus-line">Пока живёт тепло — мы рядом.</span>` },
+		{ label: "Бридж", lines: `Состав исчез за рекой...<br>Все уже спят...<br>И никто не услышит,<br>Как ночь разговаривает со мной.` },
+		{ label: "Финал", lines: `Спите... Я посторожу эту тишину...` }
+			]
+	},
+	
+	{ title: "К дню строителя",
+      meta: "Нижневартовск · 2026",
+      src: "https://raw.githubusercontent.com/romoleg-1972/music/main/22_k-dniu-stroitelia-audio.mp3",
+      lyrics: [
+		{ label: "Куплет 1", lines: `Свет горит, объект проснулся,<br>Первый миксер развернулся.<br>А по рации орут:<br>«Кран давай! Бетон идёт!»<br>Наш прораб уже спешит,<br>Сам на месте не сидит.<br>Крикнул: «Ну, чего стоим?!<br>За работу! Не дымим!»` },
+		{ label: "Припев", lines: `<span class="chorus-line">Тяжело объект сдавать,</span><br><span class="chorus-line">Смету нужно закрывать!</span><br><span class="chorus-line">Где цемент? Где арматура?</span><br><span class="chorus-line">Где опять застряла фура?!</span><br><span class="chorus-line">Так рискуем головой,</span><br><span class="chorus-line">Кран качается над землёй.</span><br><span class="chorus-line">В гости сроки прилетают —</span><br><span class="chorus-line">Как успеем? Все узнают!</span>` },
+		{ label: "Куплет 2", lines: `Снова фура не дошла,<br>Но бригада всё смогла!<br>Кто-то сваркой, кто болгаркой,<br>Искры сыплют — жарко, жарко!<br>Кто рулетку потерял,<br>А бетон уже встал!<br>В бытовке чай проглотил...<br>«— Воду! Быстрее воду!»<br>Дождь пошёл — а план горит!` },
+		{ label: "Припев", lines: `<span class="chorus-line">Нужно только всем понять:</span><br><span class="chorus-line">Стройку не остановить опять!</span><br><span class="chorus-line">За дедлайн ты мне не плачь,</span><br><span class="chorus-line">Прораб — тёртый он калач!</span><br><span class="chorus-line">По уровню каждый шов,</span><br><span class="chorus-line">Дом растёт до облаков!</span><br><span class="chorus-line">Хлеб насущный — наш этаж,</span><br><span class="chorus-line">Не унять, скажу, кураж!</span>` },
+		{ label: "Бридж", lines: `«Опалубку снимай! Заливай!»<br>Думай только о высоком,<br>Чтобы не вылезало боком.<br>Залили последний куб —<br>Всё! Можно выдохнуть, мой друг!` },
+		{ label: "Финал", lines: `Тишина вокруг опять,<br>Инструмент уже молчит...<br>Смолк компрессор, стих мотор,<br>Завершаем этот спор.<br>Дом стоит — зажёгся свет,<br>Лучше нашей работы нет!<br>Завтра снова выйдем в строй,<br>Чтобы вырос дом другой.<br>Ведь пока горит рассвет —<br>Лучше нашей работы нет!` }
+			]
+	},
+	
+	{ title: "С днем Нефтяника Бурсервис",
+      meta: "Нижневартовск · 2026",
+      src: "https://raw.githubusercontent.com/romoleg-1972/music/main/23-s-dnem-neftianika-burservis-audio.mp3",
+      lyrics: [
+		{ label: "Куплет 1", lines: `На плакатах всё красиво — глянец, фото и слова,<br>Только жизнь не на бумаге ставит главную печать.<br>Кто-то с паяльником до тьмы, кто-то держит связь в ночи,<br>А на складе кто-то ищет блок, чтобы не сорвался срок.<br>В базе девчонки до ночи собирают весь маршрут,<br>Пока они не скажут «можно» — не пойдёт работа тут.<br>Пока машина не пришла — не поедет вахта в путь,<br>Пока кабель не дадут — не запустится объект.` },
+		{ label: "Припев", lines: `<span class="chorus-line">По бумагам — мы подряд,</span><br><span class="chorus-line">По работе — тот же брат!</span><br><span class="chorus-line">Пласт не спросит, чья печать,</span><br><span class="chorus-line">Если надо — выезжать!</span><br><span class="chorus-line">Здесь всё завязано на всех,</span><br><span class="chorus-line">Не бывает лишних рук!</span><br><span class="chorus-line">Здесь чужой работы нет,</span><br><span class="chorus-line">Кто-то держит этот круг!</span>` },
+		{ label: "Куплет 2", lines: `Скрип промёрзшего металла, светит фарами пурга,<br>Кто-то паяет платы в цехе для далёкого куста.<br>Кто-то собирает узел, кто-то чинит мощный блок,<br>А логист сверяет карту, чтобы всё прибыло в срок.<br>Не бывает здесь чужих — если ночь и минус сорок,<br>Здесь без каждого звена остановится процесс —<br>Это не про громкий статус, это наш рабочий ритм!<br>Все в одной цепи стояли, прошли мороз и глушь,<br>От диспетчерской до поля — миллионы наших душ.` },
+		{ label: "Припев", lines: `<span class="chorus-line">По бумагам — мы подряд,</span><br><span class="chorus-line">По работе — тот же брат!</span><br><span class="chorus-line">Пласт не спросит, чья печать,</span><br><span class="chorus-line">Если надо — выезжать!</span><br><span class="chorus-line">Здесь всё завязано на всех,</span><br><span class="chorus-line">Не бывает лишних рук!</span><br><span class="chorus-line">Здесь чужой работы нет,</span><br><span class="chorus-line">Кто-то держит этот круг!</span>` },
+		{ label: "Бридж", lines: `Сменят вывески и штампы ещё сотни раз подряд...<br>Нефть идёт не по бумагам — по рукам простых людей.<br>Выпадет одно звено — остановится поток.<br>Печати поменялись.<br>А работа — нет.` },
+		{ label: "Припев", lines: `<span class="chorus-line">По бумагам — мы подряд,</span><br><span class="chorus-line">По работе — тот же брат!</span><br><span class="chorus-line">Пласт не спросит, чья печать,</span><br><span class="chorus-line">Если надо — выезжать!</span><br><span class="chorus-line">Здесь всё завязано на всех,</span><br><span class="chorus-line">Не бывает лишних рук!</span><br><span class="chorus-line">Здесь чужой работы нет,</span><br><span class="chorus-line">Кто-то держит этот круг!</span>` },
+		{ label: "Финал", lines: `Да...<br>Единство рождается в работе.<br>Всё завязано на всех...<br>БурСервис...<br>С праздником...<br>Парни... Девчата...<br>С Днём нефтяника вас всех!` }
+			]
+	},
+	
+	{ title: "Своя битва",
+      meta: "Нижневартовск · 2026",
+      src: "https://raw.githubusercontent.com/romoleg-1972/music/main/svoia-bitva-audio.mp3",
+      lyrics: [
+		{ label: "Куплет 1", lines: `Когда туман ложится на дорогу,<br>И кажется — исхожен каждый путь,<br>Внутри сквозит привычная тревога,<br>И тяжело дышать, и не уснуть.<br>Опустишь руки… В комнате напрасно<br>Ты ищешь свет, но гаснут фитили.<br>Никто не знает, сколько было пряток<br>У этой раненной, но выжившей души.` },
+		{ label: "Припев", lines: `<span class="chorus-line">Но ты запомни: ночь не длится вечно,</span><br><span class="chorus-line">За самым тёмным краем — чистый свет.</span><br><span class="chorus-line">У каждого своя весна и битва,</span><br><span class="chorus-line">О кулаках которой знает лишь рассвет.</span><br><span class="chorus-line">Шаг за шагом. День за днём. Помалу.</span><br><span class="chorus-line">Сквозь зубы, через пепел и туман.</span><br><span class="chorus-line">Ты доползёшь к заветному причалу,</span><br><span class="chorus-line">Стирая соль с глубоких старых ран.</span>` },
+		{ label: "Куплет 2", lines: `Чужая жизнь — красивая витрина,<br>Но не смотри туда, там правды нет.<br>У каждого внутри своя лавина,<br>Свои грехи и свой заветный бред.<br>Не все поймут, какую нёс ты ношу,<br>Не все увидят, сколько вынес ты.<br>Но ты стоишь. И этот мир расслышит<br>Твои упрямые и тихие шаги.` },
+		{ label: "Припев", lines: `<span class="chorus-line">Но ты запомни: ночь не длится вечно,</span><br><span class="chorus-line">За самым тёмным краем — чистый свет.</span><br><span class="chorus-line">У каждого своя весна и битва,</span><br><span class="chorus-line">О кулаках которой знает лишь рассвет.</span><br><span class="chorus-line">Шаг за шагом. День за днём. Помалу.</span><br><span class="chorus-line">Сквозь зубы, через пепел и туман.</span><br><span class="chorus-line">Ты доползёшь к заветному причалу,</span><br><span class="chorus-line">Стирая соль с глубоких старых ран.</span>` },
+		{ label: "Аутро", lines: `И вот когда-то, оглянувшись в прошлое,<br>Стряхнув с уставших плеч дорожный дым,<br>Ты улыбнёшься: «Всё-таки я ожил...<br>И был сильнее, чем казался остальным».` }
+			]
+	},
+	
+	{ title: "Лето тает",
+      meta: "Нижневартовск · 2026",
+      src: "https://raw.githubusercontent.com/romoleg-1972/music/main/leto-taet-audio.mp3",
+      lyrics: [
+		{ label: "Вступление", lines: `Давай просто выключим телефоны... Смотри, какой закат.` },
+		{ label: "Куплет 1", lines: `Уходит день за тёплый горизонт,<br>Оставив пыль на старых кедах.<br>И ветер над водой качает зонт,<br>А мы опять молчим о главных бедах.<br>Гитарный перебор и шум волны,<br>Напомнят всё, что было между нами.<br>И простые слова уже не нужны,<br>Когда всё сказано без слов глазами.` },
+		{ label: "Хук", lines: `На-на-на, на-на-на-на-на<br>На-на-на, на-на-на-на-на` },
+		{ label: "Припев", lines: `<span class="chorus-line">А лето тает, словно в чашке лёд,</span><br><span class="chorus-line">Но этот вечер мы с тобой запомним!</span><br><span class="chorus-line">Пусть ураган кругом и дождь идёт —</span><br><span class="chorus-line">Мы этот мир своей душой наполним!</span>` },
+		{ label: "Куплет 2", lines: `Забытый чай остыл на мураве,<br>Сверчки завели свою ночную песню.<br>И пусть кружится город в голове,<br>Но здесь, у речки, намного интересней.` },
+		{ label: "Хук", lines: `На-на-на, на-на-на-на-на<br>На-на-на, на-на-на-на-на` },
+		{ label: "Припев", lines: `<span class="chorus-line">А лето тает, словно в чашке лёд,</span><br><span class="chorus-line">Но этот вечер мы с тобой запомним!</span><br><span class="chorus-line">Пусть ураган кругом и дождь идёт —</span><br><span class="chorus-line">Мы этот мир своей душой наполним!</span>` },
+		{ label: "Финал", lines: `На-на-на, на-на-на-на-на...<br>Навсегда...` }
+			]
+	},
+	
+    {
+      title: "На берегах Оби",
+      meta: "Нижневартовск · 2026",
+      src: "https://raw.githubusercontent.com/romoleg-1972/music/main/na-beregax-obi-audio.mp3",
+      lyrics: [
+		{ label: "Куплет 1", lines: `Вдоль берегов Оби туман ложится густо,<br>Я шёл по жизни так, как чувствовал и знал.<br>Внутри порой бывало холодно и пусто,<br>Но я за правду, как за поручень, держал.<br>Я не умел дарить слова и обещанья,<br>Любовь свою ковал в металле и кодах.<br>Прости, родная, за минуты не-вниманья,<br>За то, что вечно в мыслях, в планах и делах.` },
+		{ label: "Куплет 2", lines: `А я твой сильный нрав без лишних слов читала,<br>И знала, что за кодом прячется тепло.<br>Я просто ждала, верила, прощала,<br>Когда в чертёж уткнувшись, время шло.<br>И в ту минуту, когда небо потемнело,<br>И маму мы в последний путь вели,<br>Рука моя в твоей руке онемела,<br>Чтоб эту боль мы вместе пронести смогли.` },
+		{ label: "Припев", lines: `<span class="chorus-line">Я им дарю теперь истории свои,</span><br><span class="chorus-line">А дети выросли, у каждого свой взлёт...</span><br><span class="chorus-line">Пусть нет на том пути бескрайней соловьи,</span><br><span class="chorus-line">Но наше сердце никогда не врёт.</span>` },
+		{ label: "Куплет 3", lines: `Ты думал, мало обнимал их — это мнится,<br>Они ведь видели твой честный, трудный путь.<br>Теперь летят в ладонях северной столицы,<br>И верности твоей с дороги не свернуть.` },
+		{ label: "Куплет 4", lines: `Пусть я не свят, и за спиной мосты горят,<br>И метит время шрамом душу, как ножом.<br>Но дети в Питере — они мой тихий сад,<br>Мой чистый берег, мой далёкий светлый дом.` },
+		{ label: "Аутро", lines: `Я дотяну, отполирую, доживу,<br>Смахну с тяжёлых плеч ненужный груз обид...<br>И всё, что снилось нам когда-то наяву,<br>Останется святым на берегах Оби.` }
+		]
+    },
+    {
+      title: "Спасибо тем, кто верил и любил! (кавер)",
+      meta: "Нижневартовск · 2026",
+      src: "https://raw.githubusercontent.com/romoleg-1972/music/main/spasibo-tem-kto-veril-audio.mp3",
+      lyrics: [
+		{ label: "Куплет 1", lines: `Спасибо тем, кто верил и любил!<br>Кто был в моей судьбе, а не казался...<br>Кто просто так, хоть изредка, звонил...<br>Кто в памяти моей навек остался<br>Лучом тепла.` },
+		{ label: "Куплет 2", lines: `Кто в горе не ушёл<br>И, что важнее, в радости не бросил.<br>Кто рядом был не телом, но душой...<br>Кто все мои нелепые вопросы<br>Выслушивал, пытаясь дать ответ,<br>Совет... да, что угодно... просто слушал<br>И слышал.` },
+		{ label: "Куплет 3", lines: `Тем, кто, зная много лет,<br>Мою не предал и не продал душу.<br>Спасибо тем, кто честен за спиной.<br>С кем можно быть без масок и без грима...<br>Спасибо, каждый ангел мой земной,<br>За то, что вами жизнь моя хранима!` }
+		]
+    }
+  ];
+
   const starsEl = document.getElementById('stars');
   for (let i = 0; i < 120; i++) {
     const s = document.createElement('div');
     s.className = 'star';
     const size = Math.random() * 2 + 0.5;
-    s.style.cssText = `
-      width:${size}px; height:${size}px;
-      left:${Math.random()*100}%;
-      top:${Math.random()*70}%;
-      --d:${2+Math.random()*4}s;
-      animation-delay:${Math.random()*4}s;
-    `;
+    s.style.cssText = `width:${size}px; height:${size}px; left:${Math.random()*100}%; top:${Math.random()*70}%; --d:${2+Math.random()*4}s; animation-delay:${Math.random()*4}s;`;
     starsEl.appendChild(s);
   }
 
-  // Плеер
-  const audio = document.getElementById('audioPlayer');
-  const playBtn = document.getElementById('playBtn');
-  const playIcon = document.getElementById('playIcon');
-  const progressFill = document.getElementById('progressFill');
-  const currentTimeEl = document.getElementById('currentTime');
-  const durationEl = document.getElementById('duration');
-
   const pauseSVG = `<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>`;
   const playSVG = `<path d="M8 5v14l11-7z"/>`;
-
-  function togglePlay() {
-    if (audio.paused) {
-      audio.play();
-      playIcon.innerHTML = pauseSVG;
-    } else {
-      audio.pause();
-      playIcon.innerHTML = playSVG;
-    }
-  }
+  const chevronSVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>`;
 
   function fmt(s) {
+    if (!isFinite(s)) return '0:00';
     const m = Math.floor(s/60);
     const sec = Math.floor(s%60);
     return `${m}:${sec<10?'0':''}${sec}`;
   }
 
-  audio.addEventListener('loadedmetadata', () => {
-    durationEl.textContent = fmt(audio.duration);
-  });
+  const playlistEl = document.getElementById('playlist');
+  let currentlyPlayingAudio = null;
 
-  audio.addEventListener('timeupdate', () => {
-    if (audio.duration) {
-      const pct = (audio.currentTime / audio.duration) * 100;
-      progressFill.style.width = pct + '%';
-      currentTimeEl.textContent = fmt(audio.currentTime);
+  tracks.forEach((track, i) => {
+    const card = document.createElement('div');
+    card.className = 'track-card';
+
+    const lyricsHtml = track.lyrics.length
+      ? track.lyrics.map(p => `
+          <div class="lyric-part">
+            <div class="part-label">${p.label}</div>
+            <div class="lyric-lines">${p.lines}</div>
+          </div>
+        `).join('')
+      : `<div class="no-lyrics">Текст появится позже</div>`;
+
+    card.innerHTML = `
+      <div class="track-row" data-toggle="${i}">
+        <div class="track-num">${String(i+1).padStart(2,'0')}</div>
+        <div class="track-row-info">
+          <div class="track-row-title">${track.title}</div>
+          <div class="track-row-meta">${track.meta}</div>
+        </div>
+        <div class="track-mini-play" data-play="${i}">
+          <svg viewBox="0 0 24 24" id="mini-icon-${i}">${playSVG}</svg>
+        </div>
+        <div class="lyrics-toggle" data-toggle="${i}" id="chevron-${i}">${chevronSVG}</div>
+      </div>
+      <div class="track-expand" id="expand-${i}">
+        <div class="expand-inner">
+          <div class="audio-wrap">
+            <button class="play-btn" data-play="${i}">
+              <svg viewBox="0 0 24 24" id="big-icon-${i}">${playSVG}</svg>
+            </button>
+            <div class="progress-area">
+              <div class="progress-bar" id="bar-${i}">
+                <div class="progress-fill" id="fill-${i}"></div>
+              </div>
+              <div class="time-row">
+                <span id="current-${i}">0:00</span>
+                <span id="duration-${i}">—</span>
+              </div>
+            </div>
+          </div>
+          <audio id="audio-${i}" preload="metadata" src="${track.src}"></audio>
+          <div class="lyrics-block">
+            <div class="section-label-mini">Текст песни</div>
+            ${lyricsHtml}
+          </div>
+        </div>
+      </div>
+    `;
+    playlistEl.appendChild(card);
+
+    const audio = card.querySelector(`#audio-${i}`);
+    const expand = card.querySelector(`#expand-${i}`);
+    const chevron = card.querySelector(`#chevron-${i}`);
+    const fill = card.querySelector(`#fill-${i}`);
+    const currentEl = card.querySelector(`#current-${i}`);
+    const durationEl = card.querySelector(`#duration-${i}`);
+    const bar = card.querySelector(`#bar-${i}`);
+    const miniIcon = card.querySelector(`#mini-icon-${i}`);
+    const bigIcon = card.querySelector(`#big-icon-${i}`);
+
+    card.querySelectorAll('[data-toggle]').forEach(el => {
+      el.addEventListener('click', () => {
+        const isOpen = expand.classList.contains('open');
+        expand.classList.toggle('open', !isOpen);
+        chevron.classList.toggle('open', !isOpen);
+      });
+    });
+
+    function togglePlay() {
+      if (currentlyPlayingAudio && currentlyPlayingAudio !== audio) {
+        currentlyPlayingAudio.pause();
+      }
+      if (audio.paused) {
+        audio.play();
+        currentlyPlayingAudio = audio;
+        miniIcon.innerHTML = pauseSVG;
+        bigIcon.innerHTML = pauseSVG;
+        card.classList.add('active');
+        if (!expand.classList.contains('open')) {
+          expand.classList.add('open');
+          chevron.classList.add('open');
+        }
+      } else {
+        audio.pause();
+        miniIcon.innerHTML = playSVG;
+        bigIcon.innerHTML = playSVG;
+      }
     }
+
+    card.querySelectorAll('[data-play]').forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.stopPropagation();
+        togglePlay();
+      });
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      durationEl.textContent = fmt(audio.duration);
+    });
+    audio.addEventListener('timeupdate', () => {
+      if (audio.duration) {
+        fill.style.width = (audio.currentTime / audio.duration * 100) + '%';
+        currentEl.textContent = fmt(audio.currentTime);
+      }
+    });
+    audio.addEventListener('ended', () => {
+      miniIcon.innerHTML = playSVG;
+      bigIcon.innerHTML = playSVG;
+      fill.style.width = '0%';
+      currentEl.textContent = '0:00';
+      card.classList.remove('active');
+    });
+    bar.addEventListener('click', (e) => {
+      const rect = bar.getBoundingClientRect();
+      const pct = (e.clientX - rect.left) / rect.width;
+      audio.currentTime = pct * audio.duration;
+    });
   });
 
-  audio.addEventListener('ended', () => {
-    playIcon.innerHTML = playSVG;
-    progressFill.style.width = '0%';
-    currentTimeEl.textContent = '0:00';
-  });
-
-  function seek(e) {
-    const bar = document.getElementById('progressBar');
-    const rect = bar.getBoundingClientRect();
-    const pct = (e.clientX - rect.left) / rect.width;
-    audio.currentTime = pct * audio.duration;
-  }
+  document.getElementById('expand-0').classList.add('open');
+  document.getElementById('chevron-0').classList.add('open');
 </script>
 
 </body>
