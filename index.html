@@ -626,13 +626,16 @@
         currentEl.textContent = fmt(audio.currentTime);
       }
     });
-    audio.addEventListener('ended', () => {
+        audio.addEventListener('ended', () => {
       miniIcon.innerHTML = playSVG;
       bigIcon.innerHTML = playSVG;
       fill.style.width = '0%';
       currentEl.textContent = '0:00';
       card.classList.remove('active');
       if (autoPlayEnabled && i < tracks.length - 1) {
+        expand.classList.remove('open');
+        expand.style.maxHeight = '0px';
+        chevron.classList.remove('open');
         const nextCardEl = document.querySelectorAll('.track-card')[i + 1];
         nextCardEl.querySelector('.play-btn').click();
         nextCardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
